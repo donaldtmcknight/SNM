@@ -1,0 +1,17 @@
+Package: SNM
+Type: Package
+Title: Stream Network Movements
+Version: 0.1.0
+Author: Donald T. McKnight
+Date: 2025-01-15
+Maintainer: <donald.mcknight@my.jcu.edu.au>
+Organization: Savanna Field Station
+Description: Caclculate distances and summary data for animal movements within a stream network
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Imports: sf,geosphere,igraph
+Suggests: ggplot2, ggnewscale
+Depends: 
+    R (>= 3.5)
