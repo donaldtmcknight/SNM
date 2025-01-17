@@ -55,3 +55,7 @@ dist.over.time(data=network.1,
                sensitivity.max=0.2,
                sensitivity.change=0.04)
 ```
+
+## Citation
+
+Cite as: McKnight, D.T. 2025. Stream Network Movements (SNM). R package version 0.1.0
