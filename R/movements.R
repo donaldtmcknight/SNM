@@ -59,6 +59,7 @@ movements <- function(data=NULL,space.use=T,from.previous=T,cumulative=T, downst
   line<-data$increased.line
   node.dists<-data$node.distances
   seg.dist<-data$dps.segments
+  seg.dist$distance <- seg.dist$distance+.00000001 #adds a very small pseudo count to prevent real distances from perfectly matching segment distances. This is necessary to avoid ties being falsely rejected in the space.use function
   nodes<-data$nodes
 
   colnames(coords)[which(colnames(coords)==lon.name)] <- "lon"
