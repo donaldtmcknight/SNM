@@ -215,8 +215,10 @@ movements <- function(data=NULL,space.use=T,from.previous=T,cumulative=T, downst
             net.i <- igraph::graph_from_data_frame(d = seg.dist.map[,2:4], directed = FALSE)
             igraph::E(net.i)$weight <- seg.dist.map$weight  # Assign weights to edges
 
-            #remove any segments that are between original nodes (i.e., no animal points)
-            seg.dist.sub.map.i <- seg.dist.map[-which(seg.dist.map$node1 <= max.node & seg.dist.map$node2 <= max.node),]
+            #remove any segments that are between original nodes (i.e., they do not contain animal points)
+            originals.i <- which(seg.dist.map$node1 <= max.node & seg.dist.map$node2 <= max.node) #have to do this in two steps because it runs into issues
+            seg.dist.sub.map.i <- if(length(originals.i) > 0){seg.dist.map[-originals.i,]}else{seg.dist.map}
+
 
             #extract paths based on those points (includes segments animals moved through but did not stop in)
             short.i <- igraph::shortest_paths(net.i, to= as.character(unique(c(seg.dist.sub.map.i$node1,seg.dist.sub.map.i$node2))),from = as.character(unique(c(seg.dist.sub.map.i$node1,seg.dist.sub.map.i$node2))))$vpath
