@@ -81,6 +81,7 @@ movements <- function(data=NULL,space.use=T,from.previous=T,cumulative=T, downst
 
   coords.id <- unique(coords$id)
 
+  nodes <- as.data.frame(nodes)
   #if the downstream option is being used, extracts the coordinate for the furthest point downstream
   down.node <- if(is.null(downstream.node)==F){nodes[which(nodes$id==downstream.node),c("lon","lat")]}
 
