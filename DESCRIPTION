@@ -1,7 +1,7 @@
 Package: SNM
 Type: Package
 Title: Stream Network Movements
-Version: 0.1.1
+Version: "0.1.1""
 Author: Donald T. McKnight
 Date: 2025-01-15
 Maintainer: <donald.mcknight@my.jcu.edu.au>
