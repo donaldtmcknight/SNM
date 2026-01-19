@@ -2,11 +2,19 @@ Package: SNM
 Type: Package
 Title: Stream Network Movements
 Version: 0.1.2
-Author: Donald T. McKnight
+Authors@R: person(
+    given = c("Donald", "T."),
+    family = "McKnight",
+    role = c("aut", "cre"),
+    email = "donald.mcknight@my.jcu.edu.au",
+    comment = c(affiliation = "Savanna Field Station"))
 Date: 2025-01-15
 Maintainer: Donald T. McKnight <donald.mcknight@my.jcu.edu.au>
-Organization: Savanna Field Station
-Description: SNM provides functions to caclculate distances and summary data for animal movements within a stream network.
+Description: Calculating home ranges and movements of animals in complex stream environments
+    is often challenging, and standard home range estimators do not apply. This
+    package provides a series of tools for assessing movements in a stream
+    network, such as calculating the total length of stream used, distances
+    between points, and movement patterns over time.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
