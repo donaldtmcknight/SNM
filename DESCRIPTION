@@ -15,7 +15,7 @@ Description: Calculating home ranges and movements of animals in complex stream 
     package provides a series of tools for assessing movements in a stream
     network, such as calculating the total length of stream used, distances
     between points, and movement patterns over time.
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
