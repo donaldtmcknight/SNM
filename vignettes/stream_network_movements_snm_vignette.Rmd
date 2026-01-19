@@ -1,16 +1,14 @@
 ---
-title: "Stream Network Movements (SNM) Vignette"
+title: "SNM Stream Network Movements Vignette"
 author: "Donald T. McKnight"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
+  pdf_document:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Stream Network Movements (SNM) Vignette}
+  %\VignetteIndexEntry{SNM Stream Network Movements Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{ggplot2}
-  %\VignetteDepends{ggnewscale}
 ---
 
 ```{r setup, include = FALSE}
@@ -18,6 +16,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  knitr::knit_exit()
+}
+
+if (!requireNamespace("ggnewscale", quietly = TRUE)) {
+  knitr::knit_exit()
+}
 ```
 
 # Introduction and overview

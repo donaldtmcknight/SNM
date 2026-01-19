@@ -4,7 +4,7 @@
 #' p1.b (numeric vector) Longitude and latitude of first point (within segment specified by line.b.dist and line.b)
 #' p2.b (numeric vector) Longitude and latitude of second point (within segment specified by line.b.dist and line.b)
 #' Return (numeric) Distance (in meters) between the two points
-c.stream.dist <- function(line.b.dist,line.b,p1.b,p2.b){
+c_stream_dist <- function(line.b.dist,line.b,p1.b,p2.b){
   p1.b.d<- distm(p1.b,line.b[,1:2])#distances from p1.b to line.b points
   p1.b.dlp <- which(p1.b.d==min(p1.b.d)) #extracts the ID of the closest point
   p2.b.d<- distm(p2.b,line.b[,1:2])#distances from p2.b to line.b points

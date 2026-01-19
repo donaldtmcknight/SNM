@@ -4,14 +4,14 @@ Title: Stream Network Movements
 Version: 0.1.2
 Author: Donald T. McKnight
 Date: 2025-01-15
-Maintainer: <donald.mcknight@my.jcu.edu.au>
+Maintainer: Donald T. McKnight <donald.mcknight@my.jcu.edu.au>
 Organization: Savanna Field Station
-Description: Caclculate distances and summary data for animal movements within a stream network
-License: GPL (>= 3)
+Description: SNM provides functions to caclculate distances and summary data for animal movements within a stream network.
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: sf,geosphere,igraph
-Suggests: ggplot2, ggnewscale
-Depends: 
-    R (>= 3.5)
+Suggests: ggplot2, ggnewscale, knitr,rmarkdown
+Depends: R (>= 3.5)
+VignetteBuilder: knitr

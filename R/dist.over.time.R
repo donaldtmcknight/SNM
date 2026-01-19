@@ -14,7 +14,7 @@
 #' @param sensitivity.max (numeric) The maximum buffer (+/-) around \code{time.diff}. Default = 0.1
 #' @param sensitivity.change (numeric) The amount that the sensitivity should change (both + and -) each time interval. Default = 0
 #' @param custom.times (numeric vector) Optional vector of custom time intervals to analyze (overrides time.diff and diff.max)
-#' @param custom.sensativity (numeric vector) Optional vector of custom sensitivities to apply to time intervals (overrides all other sensitivity arguments)
+#' @param custom.sensitivity (numeric vector) Optional vector of custom sensitivities to apply to time intervals (overrides all other sensitivity arguments)
 #'
 #' @return A data frame containing the outputs for each point at each time interval.
 #'

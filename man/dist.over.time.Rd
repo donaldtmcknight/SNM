@@ -48,7 +48,7 @@ dist.over.time(
 
 \item{custom.times}{(numeric vector) Optional vector of custom time intervals to analyze (overrides time.diff and diff.max)}
 
-\item{custom.sensativity}{(numeric vector) Optional vector of custom sensitivities to apply to time intervals (overrides all other sensitivity arguments)}
+\item{custom.sensitivity}{(numeric vector) Optional vector of custom sensitivities to apply to time intervals (overrides all other sensitivity arguments)}
 }
 \value{
 A data frame containing the outputs for each point at each time interval.

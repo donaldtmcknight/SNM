@@ -32,7 +32,7 @@ calc.stream.dist <- function(p1,p2,data){
     if(p1.dlp[1,1]==p2.dlp[1,1] & p1.dlp[1,2]==p2.dlp[1,2]){0}else{ #if both points are closest to the same point, the distance is 0
 
       if(p1.dlp[1,3]==p2.dlp[1,3]){ #if both points are from the same segment, does a simple measurement within that segment
-        c.stream.dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=p2)}else{
+        c_stream_dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=p2)}else{
 
           seg.nodes <- seg.dist[which(seg.dist$segment %in% c(p1.dlp[1,3],p2.dlp[1,3])),] #gives the nodes and data for the end segments in questions (need to determine the outermost node for each segment, relative to the other segment)
 
@@ -44,8 +44,8 @@ calc.stream.dist <- function(p1,p2,data){
             #identify the inner node
             inner.node <- setdiff(c(node.distances$node1,node.distances$node2),c(outer.node.distances$node1,outer.node.distances$node2))
             #get distance from each point to the inner node
-            p1.dist <- c.stream.dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=nodes[which(nodes[,"id"]== inner.node),c("lon","lat")])
-            p2.dist <- c.stream.dist(line.b.dist = line.dist[[which(names(line.dist)==p2.dlp[1,3])]],line.b = line[which(line$id==p2.dlp[1,3]),], p1.b = p2, p2.b=nodes[which(nodes[,"id"]== inner.node),c("lon","lat")])
+            p1.dist <- c_stream_dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=nodes[which(nodes[,"id"]== inner.node),c("lon","lat")])
+            p2.dist <- c_stream_dist(line.b.dist = line.dist[[which(names(line.dist)==p2.dlp[1,3])]],line.b = line[which(line$id==p2.dlp[1,3]),], p1.b = p2, p2.b=nodes[which(nodes[,"id"]== inner.node),c("lon","lat")])
             sum(p1.dist,p2.dist) #sum distances
           }else{#end if (nrow(node.distances)==3)
             #distance between the inner nodes of the segments in question (i.e., the distance covered by all segments between the two where the poitns fall)
@@ -56,14 +56,14 @@ calc.stream.dist <- function(p1,p2,data){
             #identifies the inner node
             p1.inner.node <- intersect(c(p1.inner.node$node1,p1.inner.node$node2),c(inner.node.distances$node1,inner.node.distances$node2))
             #calculate the distance between the first point and the inner node of its segment
-            p1.dist <- c.stream.dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=nodes[which(nodes[,"id"]== p1.inner.node),c("lon","lat")])
+            p1.dist <- c_stream_dist(line.b.dist = line.dist[[which(names(line.dist)==p1.dlp[1,3])]],line.b = line[which(line$id==p1.dlp[1,3]),], p1.b = p1, p2.b=nodes[which(nodes[,"id"]== p1.inner.node),c("lon","lat")])
 
             #subsets to node and segment info for segment where second point is found
             p2.inner.node <- seg.nodes[which(seg.nodes$segment==p2.dlp[1,3]),]
             #identifies the inner node
             p2.inner.node <- intersect(c(p2.inner.node$node1,p2.inner.node$node2),c(inner.node.distances$node1,inner.node.distances$node2))
             #calculate the distance between the second point and the inner node of its segment
-            p2.dist <- c.stream.dist(line.b.dist = line.dist[[which(names(line.dist)==p2.dlp[1,3])]],line.b = line[which(line$id==p2.dlp[1,3]),], p1.b = p2, p2.b=nodes[which(nodes[,"id"]== p2.inner.node),c("lon","lat")])
+            p2.dist <- c_stream_dist(line.b.dist = line.dist[[which(names(line.dist)==p2.dlp[1,3])]],line.b = line[which(line$id==p2.dlp[1,3]),], p1.b = p2, p2.b=nodes[which(nodes[,"id"]== p2.inner.node),c("lon","lat")])
 
             #calculates total distance by summing the distances within each segment and the total distances of the segments between those segments
             sum(p1.dist,p2.dist, inner.node.distances[,3])} #end else{} from more than 3 rows
