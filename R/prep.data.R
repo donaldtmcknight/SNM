@@ -3,7 +3,7 @@
 #' Wrapper function to prepare stream data for analyses
 #' @param l (shapefile) A projected polyline loaded with st_read(). Should include an id variable  specifying different segments of the stream (this should be included even if there is only a single segment)
 #' @param freq (numeric) The distance (in meters) to add points. Default = 1
-#' @param nodes (data.frame) A data frame of coordinates for the nodes where stream segments meet. Should contain columns for latitude, longitude, and the identity of each node (\strong{identities must be integers and go from 1 to number of nodes}
+#' @param nodes (data.frame) A data frame of coordinates for the nodes where stream segments meet or end. Should contain columns for latitude, longitude, and the identity of each node (\strong{identities must be integers and go from 1 to number of nodes)}
 #' @param lon.name (character) Name of the column of longitudes (in quotes). Default = "lon"
 #' @param lat.name (character) Name of the column of latitudes (in quotes). Default = "lat"
 #' @param node.name (character) Name of the column of segment identities (in quotes). Default = "id"
@@ -20,15 +20,15 @@
 #'
 #' @return A list containing five objects:
 #'
-#' nodes = (data.frame) Coordinates for the nodes where stream segments meet.
+#' \code{nodes} = (data.frame) Coordinates for the nodes where stream segments meet or end.
 #'
-#' increased.line = (data.frame) Coordinates describing the center line of the stream with an increased frequency of points
+#' \code{increased.line} = (data.frame) Coordinates describing the center line of the stream with an increased frequency of points
 #'
-#' dps.segments = (data.frame) Total distances of each segment and the nodes defining that segment
+#' \code{dps.segments} = (data.frame) Total distances of each segment and the nodes defining that segment
 #'
-#' dps.distances = (list) List of data frames (one data frame per segment) with the distances between each consecutive pair of points
+#' \code{dps.distances} = (list) List of data frames (one data frame per segment) with the distances between each consecutive pair of points
 #'
-#' node.distances = (data.frame) Minimum distance between each pair of nodes (not simply nodes on a given segment)
+#' \code{node.distances} = (data.frame) Minimum distance between each pair of nodes (not simply nodes on a given segment)
 #'
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom igraph degree

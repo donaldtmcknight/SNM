@@ -1,7 +1,7 @@
 Package: SNM
 Type: Package
 Title: Stream Network Movements
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: person(
     given = c("Donald", "T."),
     family = "McKnight",

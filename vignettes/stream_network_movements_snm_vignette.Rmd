@@ -49,7 +49,7 @@ Three input objects are required:
 * Data frame with the coordinates and IDs of each node
 * Data frame with the coordinates, IDs, and (optionally) dates and times each time an animal was tracked (dates and times are required for the *dist.over.time()* function and highly recommended for *movements()*)
 
-All three objects must be in the same projected format and coordinate system (this package was written and tested using decimal degrees).
+All three objects must be in the same projected format and coordinate system (this package was written and tested using decimal degrees, and use of decimal degrees is highly recommended).
 
 A fourth object (a shapefile showing the boundaries of the stream) has been included for illustrative purposes, but you do not need a boundary shapefile to use the package.
 
@@ -57,7 +57,7 @@ A fourth object (a shapefile showing the boundaries of the stream) has been incl
 
 To use this package, you need a shapefile of the stream network you want to analyze. This should be a polyline that runs down the center of the stream, where each segment of the network has a different ID (label). "Segments" refer to "edges" of a network, with the section of stream between any two nodes counting as a unique segment. Nodes must be included anywhere that two segments meet as well as at the ends of any terminal segments.
 
-Let's look at the *stream.line* and *nodes* objects that come with the **SNM** package. We'll also include a polygon shapefile showing the boundaries of the stream. This shapefile is not actually needed for any functions; it is just included here illustrate the point that the polyline you need should run down the center of the stream.
+Let's look at the *stream.line* and *nodes* objects that come with the **SNM** package. We'll also include a polygon shapefile showing the boundaries of the stream. This shapefile is not actually needed for any functions; it is included here to illustrate the point that the polyline you need should run down the center of the stream.
 ```{r}
 library(ggplot2)
 library(ggnewscale)
@@ -271,7 +271,7 @@ This outputs a data frame with all of the input data, plus multiple additional c
 
 Note that for each individual, the first row is mostly NA because the animal has, by definition, not moved yet.
 
-Plotting some of these outputs can give useful insights into animal movement patterns. For example, if we plot the space use of turtle 2, we can see that at first, its space use increased rapidly, before stagnating while it moved around in an area where it had already been documented, followed by another large movement. If you have tracked an animal long enough to establish its home range, you should see this line asymptote. That clearly is not the case here.
+Plotting some of these outputs can give useful insights into animal movement patterns. For example, if we plot the space use of turtle2, we can see that at first, its space use increased rapidly, before stagnating while it moved around in an area where it had already been documented, followed by another large movement. If you have tracked an animal long enough to establish its home range, you should see this line asymptote. That clearly is not the case here.
 
 ```{r}
 ggplot(move.results[move.results$id=="turtle2",],aes(x=date.time,y=space.use))+
@@ -461,7 +461,7 @@ Some of these functions, especially *dist.over.time()* may take a long time to r
 
 * Ensure that all your data are in the same projected format
 * Plot your data to make sure your stream networks are correct and your points are within the network
-* Double check that you have a node at each intersection of segments and each end of a segment.
+* Double check that you have a node at each intersection of segments and each end of a segment
 * Double check that all your nodes are named as an integer and there are no duplicate names
 * Double check that segments are designated correctly
 * Double check that segments are named as an integer and there are no duplicate names
@@ -482,5 +482,9 @@ Especially with the *dist.over.time()* function, you should be cautious about po
 
 To avoid this problem, you may need to filter your data before or after running *dist.over.time()* to remove multiple values for a given time interval ending on a given date (or hour or whatever your units are). Filtering before running the function will reduce run time, but could limit your matches unless tracking was done at very consistent times of day. Alternatively, filtering after running the function will take longer, but will maximize the usable data and will give the closest matches for the specified time interval (because when a single point pairs with several others for a given time interval, only the pair closest to the specified time interval is used).
 
+# Suggested reading
 
+This package was originally developed while working on Central American River Turtles (*Dermatemys mawii*) and the utility of many of its functions are illustrated i:
+
+McKnight, D. T., E. D. Ellsworth, J. Serano, T. Pop, C. D. Siler, D. M. Thompson, and D. B. Ligon. 2025. Movement patterns and space use of a large, aquatic turtle, with a comparison of GPS, VHF, and acoustic transmitters. Endangered Species Research 58:123–136. DOI: https://doi.org/10.3354/esr
 

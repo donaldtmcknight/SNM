@@ -2,15 +2,15 @@
 #'
 #' For a series of time intervals, calculate the distance moved between each point and the previous point matching the given time interval.
 #' @param data (list) Output from \code{\link{prep.data}}.
-#' @param coords (data.frame) Data frame containing coordinates for animal locations. It must include a column animal IDs, columns of latitude and longitude (in decimal degrees projected to the same system as the rest of the data), and a column of dates/times (in POSIX format). All other columns will be ignored.
+#' @param coords (data.frame) Data frame containing coordinates for animal locations. It must include a column of animal IDs, columns of latitude and longitude (in decimal degrees projected to the same system as the rest of the data), and a column of dates/times (in POSIX format). All other columns will be ignored.
 #' @param lon.name (character) For the \code{coords} object, the name of the column of longitudes (in quotes). Default = "lon"
 #' @param lat.name (character) For the \code{coords} object, the name of the column of latitudes (in quotes). Default = "lat"
 #' @param id.name (character) For the \code{coords} object, the name of the column of animal identities (in quotes). Default = "id"
 #' @param date.time.name (character) For the \code{coords} object, the name of the column of dates and times (in a POSIX format). Default = "date.time"
 #' @param units (character) One of "secs", "mins", "hours", or "days" specifying the units for all time and sensitivity inputs and outputs
-#' @param time.diff (numeric) The amount of time to separate each analysis of distance (i.e., a time interval). Default = 1
+#' @param time.diff (numeric) The amount of time to separate each analysis of distance (i.e., a time interval based on  \code{units}). Default = 1
 #' @param diff.max (numeric) The maximum time interval to analyze. If NULL, it will use the maximum possible interval. Default = \code{NULL}
-#' @param sensitivity.min (numeric) The minimum (starting) buffer (+/-) around \code{time.diff}, i.e., the buffer when \code{time.diff} = 1. Default = 0.1
+#' @param sensitivity.min (numeric) The minimum (starting) buffer (+/-) around \code{time.diff} (i.e., the buffer when \code{time.diff} = 1). Default = 0.1
 #' @param sensitivity.max (numeric) The maximum buffer (+/-) around \code{time.diff}. Default = 0.1
 #' @param sensitivity.change (numeric) The amount that the sensitivity should change (both + and -) each time interval. Default = 0
 #' @param custom.times (numeric vector) Optional vector of custom time intervals to analyze (overrides time.diff and diff.max)
@@ -28,19 +28,19 @@
 #'
 #' Column \code{sensitivity} = the time buffer (+/-) around the \code{time.diff} for the given point (in the time units specified by \code{units})
 #'
-#' \strong{Note}: Depending on the input, there may be multiple end points that are within the specified time interval. For example, if \code{time.diff} = 1, \code{sensitivity.min} = .1, \code{units} = "days", and for a given animal, there were points at "2023-06-01 12:00:00", "2023-06-02 12:00:00" and "2023-06-02 12:30:00", the results will include a row with "2023-06-02 12:00:00" as the endpoint and a row with "2023-06-02 12:30:00" as the endpoint (both showing the distance from "2023-06-01 12:00:00"). Depending on the data set and questions being asked, that may create undesirable pseudoreplication and you may need to filter the results based on date or some other criterion.
+#' \strong{Note}: Although each endpoint will only be matched with one previous point for a given time interval, there may be multiple different end points within that time interval. For example, if \code{time.diff} = 1, \code{sensitivity.min} = .1, \code{units} = "days", and for a given animal, there were points at "2023-06-01 12:00:00", "2023-06-02 12:00:00" and "2023-06-02 12:30:00", the results will include a row with "2023-06-02 12:00:00" as the endpoint and a row with "2023-06-02 12:30:00" as the endpoint (both showing the distance from "2023-06-01 12:00:00"). Depending on the data set and questions being asked, that may create undesirable pseudoreplication and you may need to filter the results based on date or some other criterion.
 #'
 #' \strong{Note}: When reading the \code{time.diff} column, remember that points are not necessarily sequential. Thus, days = 1, 2, 3 does not necessarily indicate movement over days 1, 2, and 3 of the study, rather it is movement over that many days, regardless of when in the study the pairs of points occurred. See the vignette for suggestions on visualizing and analyzing these data.
 #'
 #' @details
-#' This function calculates movement over given intervals of time. For each coordinate (going from oldest to newest) it looks for matches to previous coordinates where the time difference between them matches the specified interval
+#' This function calculates movement over given intervals of time. For each coordinate (going from oldest to newest) it looks for matches to previous coordinates where the time difference between them matches the specified interval.
 #'
-#' \code{time.diff}, \code{diff.max}, and \code{units} specify the time intervals. \code{time.diff} specifies the amount of additional time in each sequential interval, with \code{diff.max} specifying the largest time interval. For example, if \code{time.diff} = 6 \code{diff.max} = 24 and \code{units} = "hours" movement will be calculated over 6 hours, 12 hours, 18 hours, and 24 hours.
+#' \code{time.diff}, \code{diff.max}, and \code{units} specify the time intervals. \code{time.diff} specifies the amount of additional time in each sequential interval, with \code{diff.max} specifying the largest time interval. For example, if \code{time.diff} = 6, \code{diff.max}, = 24 and \code{units} = "hours" movement will be calculated over 6 hours, 12 hours, 18 hours, and 24 hours.
 #'
 #' Points can be used for multiple time intervals. For example, if \code{time.diff} = 1 and \code{units} = "days" and an animal was tracked at 12:00 on the 1st, 2nd, 3rd, 5th, and 6th of January, the following pairs of points would be used for each time interval:
 #' \itemize{
 #'  \item 1 day interval = days 1&2, 2&3, 5&6
-#'  \item 2 day interval = days 1&3
+#'  \item 2 day interval = days 1&3, 3&5
 #'  \item 3 day interval = days 2&5, 3&6
 #'  \item 4 day interval = days 1&5, 2&6
 #'  \item 5 day interval = days 1&6
@@ -55,9 +55,9 @@
 #'   \item \code{time.diff} = 1
 #'   \item \code{diff.max} = 6
 #'   \item \code{units} = "days"
-#'   \item \code{sensitivity.min} = .1
-#'   \item \code{sensitivity.max} = .5
-#'   \item \code{sensitivity.change} = .1
+#'   \item \code{sensitivity.min} = 0.1
+#'   \item \code{sensitivity.max} = 0.5
+#'   \item \code{sensitivity.change} = 0.1
 #'   }
 #' The function will use intervals of 1, 2, 3, 4, 5, 6 days, and the corresponding buffers will be +/- 0.1, 0.2, 0.3, 0.4, 0.5, 0.5 days.
 #'
